@@ -111,7 +111,7 @@ const Home = () => {
           <p className='text-[15px] font-[700] mt-4'>Framework</p>
 
           <Select
-            className='mt-2'
+            className='mt-2 text-black'
             options={options}
             value={frameWork}
             onChange={(selected) => setFrameWork(selected)}
