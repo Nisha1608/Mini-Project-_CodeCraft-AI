@@ -1,12 +1,46 @@
-# React + Vite
+# 🚀 CodeCraft AI – Mini Project  
+**AI-Powered UI Component Generator**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CodeCraft AI is a smart web tool that generates **ready-to-use UI components** like cards, buttons, forms, sections, and full layouts.  
+Just describe what you want, choose a framework, and the AI writes the entire code for you.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🔮 Generates modern UI components  
+- ⚡ Supports HTML, CSS, Tailwind & Bootstrap  
+- 🎯 Clean & responsive code output  
+- 📝 Monaco editor with live preview  
+- 📥 Download & Copy feature  
+- 🔒 Secure API key handling using `.env`  
+- 🎨 Custom UI with teal theme  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tech Stack Used
+
+- **React + Vite**  
+- **Tailwind CSS**  
+- **Google Gemini API**  
+- **React-Select**  
+- **Monaco Editor**  
+- **React Icons**  
+- **Toastify**  
+
+---
+
+## 🧠 How It Works
+
+1. User describes the UI component  
+2. Selects a framework  
+3. AI generates code using Gemini API  
+4. Code appears inside the editor  
+5. User can preview, copy, or download it  
+
+---
+
+## 🔐 Environment Setup
+
+Create a `.env` file in the project root:
+
