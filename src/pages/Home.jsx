@@ -14,7 +14,6 @@ import { toast } from 'react-toastify';
 
 const Home = () => {
 
-  // ✅ Fixed typos in options
   const options = [
     { value: 'html-css', label: 'HTML + CSS' },
     { value: 'html-tailwind', label: 'HTML + Tailwind CSS' },
@@ -32,18 +31,16 @@ const Home = () => {
   const [isNewTabOpen, setIsNewTabOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // ✅ Extract code safely
   function extractCode(response) {
     const match = response.match(/```(?:\w+)?\n?([\s\S]*?)```/);
     return match ? match[1].trim() : response.trim();
   }
 
-  // ⚠️ API Key (you said you want it inside the file)
   const ai = new GoogleGenAI({
-    apiKey: "YOUR_API_KEY"
-  });
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
 
-  // ✅ Generate code
+
   async function getResponse() {
     if (!prompt.trim()) return toast.error("Please describe your component first");
 
@@ -52,19 +49,9 @@ const Home = () => {
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
         contents: `
-     You are an experienced programmer with expertise in web development and UI/UX design. You create modern, animated, and fully responsive UI components. You are highly skilled in HTML, CSS, Tailwind CSS, Bootstrap, JavaScript, React, Next.js, Vue.js, Angular, and more.
-
-Now, generate a UI component for: ${prompt}  
-Framework to use: ${frameWork.value}  
-
-Requirements:  
-- The code must be clean, well-structured, and easy to understand.  
-- Optimize for SEO where applicable.  
-- Focus on creating a modern, animated, and responsive UI design.  
-- Include high-quality hover effects, shadows, animations, colors, and typography.  
-- Return ONLY the code, formatted properly in **Markdown fenced code blocks**.  
-- Do NOT include explanations, text, comments, or anything else besides the code.  
-- And give the whole code in a single HTML file.
+        Generate UI for: ${prompt}
+        Framework: ${frameWork.value}
+        Return ONLY code.
       `,
       });
 
@@ -78,7 +65,6 @@ Requirements:
     }
   };
 
-  // ✅ Copy Code
   const copyCode = async () => {
     if (!code.trim()) return toast.error("No code to copy");
     try {
@@ -90,7 +76,6 @@ Requirements:
     }
   };
 
-  // ✅ Download Code
   const downnloadFile = () => {
     if (!code.trim()) return toast.error("No code to download");
 
@@ -109,62 +94,47 @@ Requirements:
     <>
       <Navbar />
 
-      {/* ✅ Better responsive layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 px-6 lg:px-16">
-        {/* Left Section */}
+
+        {/* LEFT */}
         <div className="w-full py-6 rounded-xl bg-[#141319] mt-5 p-5">
-          <h3 className='text-[25px] font-semibold sp-text'>AI Component Generator</h3>
-          <p className='text-gray-400 mt-2 text-[16px]'>Describe your component and let AI code it for you.</p>
+          
+          {/* 🔥 Teal Title */}
+          <h3 className='text-[25px] font-semibold sp-text text-teal-400'>
+            CodeCraft AI
+          </h3>
+
+          <p className='text-gray-400 mt-2 text-[16px]'>
+            Describe your component and let AI code it for you.
+          </p>
 
           <p className='text-[15px] font-[700] mt-4'>Framework</p>
+
           <Select
             className='mt-2'
             options={options}
             value={frameWork}
-            styles={{
-              control: (base) => ({
-                ...base,
-                backgroundColor: "#111",
-                borderColor: "#333",
-                color: "#fff",
-                boxShadow: "none",
-                "&:hover": { borderColor: "#555" }
-              }),
-              menu: (base) => ({
-                ...base,
-                backgroundColor: "#111",
-                color: "#fff"
-              }),
-              option: (base, state) => ({
-                ...base,
-                backgroundColor: state.isSelected
-                  ? "#333"
-                  : state.isFocused
-                    ? "#222"
-                    : "#111",
-                color: "#fff",
-                "&:active": { backgroundColor: "#444" }
-              }),
-              singleValue: (base) => ({ ...base, color: "#fff" }),
-              placeholder: (base) => ({ ...base, color: "#aaa" }),
-              input: (base) => ({ ...base, color: "#fff" })
-            }}
             onChange={(selected) => setFrameWork(selected)}
           />
 
-          <p className='text-[15px] font-[700] mt-5'>Describe your component</p>
+          <p className='text-[15px] font-[700] mt-5'>
+            AI-powered tool to craft clean React UI components instantly.
+          </p>
+
           <textarea
             onChange={(e) => setPrompt(e.target.value)}
             value={prompt}
-            className='w-full min-h-[200px] rounded-xl bg-[#09090B] mt-3 p-3 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-purple-500 resize-none'
+            className='w-full min-h-[200px] rounded-xl bg-[#09090B] mt-3 p-3 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-teal-500 resize-none'
             placeholder="Describe your component in detail and AI will generate it..."
           ></textarea>
 
           <div className="flex items-center justify-between mt-3">
             <p className='text-gray-400 text-sm'>Click on generate button to get your code</p>
+
+            {/* Teal Generate Button */}
             <button
               onClick={getResponse}
-              className="flex items-center p-3 rounded-lg border-0 bg-gradient-to-r from-purple-400 to-purple-600 px-5 gap-2 transition-all hover:opacity-80 hover:scale-105 active:scale-95"
+              className="flex items-center p-3 rounded-lg border-0 bg-gradient-to-r from-teal-400 to-teal-600 px-5 gap-2 transition-all hover:opacity-80 hover:scale-105 active:scale-95"
             >
               {loading ? <ClipLoader color='white' size={18} /> : <BsStars />}
               Generate
@@ -172,67 +142,75 @@ Requirements:
           </div>
         </div>
 
-        {/* Right Section */}
+        {/* RIGHT */}
         <div className="relative mt-2 w-full h-[80vh] bg-[#141319] rounded-xl overflow-hidden">
-          {
-            !outputScreen ? (
-              <div className="w-full h-full flex items-center flex-col justify-center">
-                <div className="p-5 w-[70px] flex items-center justify-center text-[30px] h-[70px] rounded-full bg-gradient-to-r from-purple-400 to-purple-600">
-                  <HiOutlineCode />
-                </div>
-                <p className='text-[16px] text-gray-400 mt-3'>Your component & code will appear here.</p>
+
+          {!outputScreen ? (
+            <div className="w-full h-full flex items-center flex-col justify-center">
+
+              {/* Teal icon circle */}
+              <div className="p-5 w-[70px] flex items-center justify-center text-[30px] h-[70px] rounded-full bg-gradient-to-r from-teal-400 to-teal-600">
+                <HiOutlineCode />
               </div>
-            ) : (
-              <>
-                {/* Tabs */}
-                <div className="bg-[#17171C] w-full h-[50px] flex items-center gap-3 px-3">
-                  <button
-                    onClick={() => setTab(1)}
-                    className={`w-1/2 py-2 rounded-lg transition-all ${tab === 1 ? "bg-purple-600 text-white" : "bg-zinc-800 text-gray-300"}`}
-                  >
-                    Code
-                  </button>
-                  <button
-                    onClick={() => setTab(2)}
-                    className={`w-1/2 py-2 rounded-lg transition-all ${tab === 2 ? "bg-purple-600 text-white" : "bg-zinc-800 text-gray-300"}`}
-                  >
-                    Preview
-                  </button>
-                </div>
 
-                {/* Toolbar */}
-                <div className="bg-[#17171C] w-full h-[50px] flex items-center justify-between px-4">
-                  <p className='font-bold text-gray-200'>Code Editor</p>
-                  <div className="flex items-center gap-2">
-                    {tab === 1 ? (
-                      <>
-                        <button onClick={copyCode} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><IoCopy /></button>
-                        <button onClick={downnloadFile} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><PiExportBold /></button>
-                      </>
-                    ) : (
-                      <>
-                        <button onClick={() => setIsNewTabOpen(true)} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><ImNewTab /></button>
-                        <button onClick={() => setRefreshKey(prev => prev + 1)} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><FiRefreshCcw /></button>
-                      </>
-                    )}
-                  </div>
-                </div>
+              <p className='text-[16px] text-gray-400 mt-3'>
+                Your component & code will appear here.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* TABS */}
+              <div className="bg-[#17171C] w-full h-[50px] flex items-center gap-3 px-3">
 
-                {/* Editor / Preview */}
-                <div className="h-full">
+                <button
+                  onClick={() => setTab(1)}
+                  className={`w-1/2 py-2 rounded-lg transition-all ${tab === 1 ? "bg-teal-600 text-white" : "bg-zinc-800 text-gray-300"}`}
+                >
+                  {/* 🔥 Teal “Code” label */}
+                  <span className="text-teal-300">Code</span>
+                </button>
+
+                <button
+  onClick={() => setTab(2)}
+  className={`w-1/2 py-2 rounded-lg transition-all ${tab === 2 ? "bg-teal-600 text-white" : "bg-zinc-800 text-gray-300"}`}
+>
+  <span className="text-teal-300">Preview</span>
+</button>
+
+              </div>
+
+              {/* TOOLBAR */}
+              <div className="bg-[#17171C] w-full h-[50px] flex items-center justify-between px-4">
+                <p className='font-bold text-gray-200'>Code Editor</p>
+
+                <div className="flex items-center gap-2">
                   {tab === 1 ? (
-                    <Editor value={code} height="100%" theme='vs-dark' language="html" />
+                    <>
+                      <button onClick={copyCode} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><IoCopy /></button>
+                      <button onClick={downnloadFile} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><PiExportBold /></button>
+                    </>
                   ) : (
-                    <iframe key={refreshKey} srcDoc={code} className="w-full h-full bg-white text-black"></iframe>
+                    <>
+                      <button onClick={() => setIsNewTabOpen(true)} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><ImNewTab /></button>
+                      <button onClick={() => setRefreshKey(prev => prev + 1)} className="w-10 h-10 rounded-xl border border-zinc-800 flex items-center justify-center hover:bg-[#333]"><FiRefreshCcw /></button>
+                    </>
                   )}
                 </div>
-              </>
-            )
-          }
+              </div>
+
+              <div className="h-full">
+                {tab === 1 ? (
+                  <Editor value={code} height="100%" theme='vs-dark' language="html" />
+                ) : (
+                  <iframe key={refreshKey} srcDoc={code} className="w-full h-full bg-white text-black"></iframe>
+                )}
+              </div>
+            </>
+          )}
+
         </div>
       </div>
 
-      {/* ✅ Fullscreen Preview Overlay */}
       {isNewTabOpen && (
         <div className="absolute inset-0 bg-white w-screen h-screen overflow-auto">
           <div className="text-black w-full h-[60px] flex items-center justify-between px-5 bg-gray-100">
