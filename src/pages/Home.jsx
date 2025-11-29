@@ -101,7 +101,7 @@ const Home = () => {
           
           {/* 🔥 Teal Title */}
           <h3 className='text-[25px] font-semibold sp-text text-teal-400'>
-            CodeCraft AI
+          UI By AI
           </h3>
 
           <p className='text-gray-400 mt-2 text-[16px]'>
