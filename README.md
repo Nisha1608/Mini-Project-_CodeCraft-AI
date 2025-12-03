@@ -44,3 +44,7 @@ Just describe what you want, choose a framework, and the AI writes the entire co
 
 Create a `.env` file in the project root:
 
+## Deployed link 
+
+https://transcendent-sable-fcff9b.netlify.app/
+
